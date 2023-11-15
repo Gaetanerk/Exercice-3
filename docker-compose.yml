@@ -6,14 +6,19 @@ services:
     image: mysql
     restart: always
     container_name: db-beers
-    build: ./sql/Dockerfile
+    build:
+      context: ./sql
+      dockerfile: Dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: "test"
       MYSQL_DATABASE: "beer"
 
   api:
     container_name: api-beers
-    build: ./api/Dockerfile
+    build:
+      context: ./api
+      dockerfile: Dockerfile
     ports:
-      - '5000:80'
-    depends_on: db
+      - '80:5000'
+    depends_on: 
+    - db
